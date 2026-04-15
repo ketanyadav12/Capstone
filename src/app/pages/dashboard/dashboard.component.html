@@ -1,0 +1,57 @@
+<section class="container-fluid px-0">
+  <div class="row g-3 mb-3" *ngIf="insights.length > 0">
+    <div class="col-12">
+      <div class="modern-card p-3 border-start border-4 border-info">
+        <h6 class="mb-2 text-info"><i class="fa-solid fa-robot me-2"></i>AI Insights</h6>
+        <div class="d-flex text-muted small" style="overflow: hidden;">
+          <marquee behavior="scroll" direction="left">
+            <span class="me-4" *ngFor="let insight of insights"><i class="fa-solid fa-circle-info me-1"></i>{{ insight }}</span>
+          </marquee>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <div class="col-sm-6 col-xl-3" *ngFor="let stat of stats">
+      <article class="modern-card stat-card" [ngClass]="stat.colorClass">
+        <div>
+          <p class="mb-1 stat-title">{{ stat.title }}</p>
+          <h4 class="mb-0">{{ stat.value }}</h4>
+        </div>
+        <div class="stat-icon">
+          <i [class]="stat.icon"></i>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-12 col-xl-6">
+      <div class="modern-card chart-card">
+        <h6 class="section-title mb-3"><i class="fa-solid fa-chart-bar text-primary me-2"></i>Village Comparison</h6>
+        <div class="chart-container">
+          <canvas id="barChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-xl-6">
+      <div class="modern-card chart-card">
+        <h6 class="section-title mb-3"><i class="fa-solid fa-chart-line text-success me-2"></i>Growth Trends</h6>
+        <div class="chart-container">
+          <canvas id="lineChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-xl-5">
+      <div class="modern-card chart-card">
+        <h6 class="section-title mb-3"><i class="fa-solid fa-chart-pie text-info me-2"></i>Resource Distribution</h6>
+        <div class="chart-container">
+          <canvas id="pieChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

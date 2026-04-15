@@ -1,0 +1,23 @@
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, #2563eb 0%, #10b981 100%);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 460px;
+  border: none;
+}
+
+.forgot-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,83 @@
+<section>
+  <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h4 class="section-title mb-0"><i class="fa-solid fa-border-all text-primary me-2"></i>{{ moduleTitle }} Module</h4>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <div class="col-sm-6 col-xl-4" *ngFor="let card of summaryCards">
+      <article class="modern-card p-3 d-flex justify-content-between align-items-center summary-card" [ngClass]="card.colorClass">
+        <div>
+          <p class="mb-1 text-muted-custom">{{ card.title }}</p>
+          <h5 class="mb-0">{{ card.value }}</h5>
+        </div>
+        <i [class]="card.icon + ' fs-3 text-primary'"></i>
+      </article>
+    </div>
+  </div>
+
+  <div class="modern-card p-3 mb-3">
+    <div class="row g-2 align-items-center mb-3">
+      <div class="col-md-8">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search area"
+          [(ngModel)]="searchTerm"
+          (input)="onFilterChanged()"
+        />
+      </div>
+      <div class="col-md-4">
+        <select class="form-select" [(ngModel)]="selectedFilter" (change)="onFilterChanged()">
+          <option value="All">All Status</option>
+          <option value="Good">Good</option>
+          <option value="Average">Average</option>
+          <option value="Poor">Poor</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table align-middle mb-0">
+        <thead>
+          <tr>
+            <th>Area</th>
+            <th>Status</th>
+            <th>Score</th>
+            <th>Updated On</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of paginatedData">
+            <td>{{ row.area }}</td>
+            <td>
+              <span class="badge" [ngClass]="{
+                'text-bg-success': row.status === 'Good',
+                'text-bg-warning': row.status === 'Average',
+                'text-bg-danger': row.status === 'Poor'
+              }">{{ row.status }}</span>
+            </td>
+            <td>{{ row.score }}</td>
+            <td>{{ row.updatedOn }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="d-flex justify-content-end align-items-center gap-2 mt-3">
+      <button class="btn btn-sm btn-outline-primary" (click)="previousPage()" [disabled]="currentPage === 1">
+        <i class="fa-solid fa-chevron-left me-1"></i>Previous
+      </button>
+      <span class="small">Page {{ currentPage }} of {{ totalPages }}</span>
+      <button class="btn btn-sm btn-outline-primary" (click)="nextPage()" [disabled]="currentPage === totalPages">
+        Next<i class="fa-solid fa-chevron-right ms-1"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="modern-card p-3">
+    <h6 class="section-title mb-3"><i class="fa-solid fa-chart-column text-primary me-2"></i>{{ moduleTitle }} Performance Overview</h6>
+    <div class="chart-wrap">
+      <canvas id="moduleChart"></canvas>
+    </div>
+  </div>
+</section>

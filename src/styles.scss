@@ -1,0 +1,82 @@
+@import 'bootstrap/scss/bootstrap';
+@import 'leaflet/dist/leaflet.css';
+
+:root {
+  --primary-color: #2563eb;
+  --secondary-color: #10b981;
+  --light-bg: #f9fafb;
+  --card-bg: #ffffff;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --sidebar-bg: #111827;
+  --sidebar-text: #ffffff;
+  --shadow-soft: 0 10px 25px rgba(15, 23, 42, 0.08);
+  --border-soft: #e5e7eb;
+}
+
+body.dark-mode {
+  --light-bg: #0f172a;
+  --card-bg: #1e293b;
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --sidebar-bg: #020617;
+  --sidebar-text: #f8fafc;
+  --border-soft: #334155;
+  --shadow-soft: 0 10px 25px rgba(2, 6, 23, 0.5);
+}
+
+body.dark-mode .leaflet-popup-content-wrapper,
+body.dark-mode .leaflet-popup-tip {
+  background: var(--card-bg);
+  color: var(--text-main);
+  box-shadow: var(--shadow-soft);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: var(--light-bg);
+  color: var(--text-main);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.modern-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.modern-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 35px rgba(15, 23, 42, 0.12);
+}
+
+.section-title {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.text-muted-custom {
+  color: var(--text-muted);
+}
+
+.btn-modern {
+  border-radius: 10px;
+  transition: all 0.25s ease;
+}
+
+.btn-modern:hover {
+  transform: translateY(-2px);
+}

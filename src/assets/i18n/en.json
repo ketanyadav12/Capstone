@@ -1,0 +1,18 @@
+{
+  "HEADER": {
+    "TITLE": "Smart Village Dashboard",
+    "ADD_DATA": "Add Data",
+    "LANGUAGE": "Language"
+  },
+  "SIDEBAR": {
+    "DASHBOARD": "Dashboard",
+    "MAP": "Map",
+    "LOGOUT": "Logout"
+  },
+  "DASH": {
+    "COMPARISON": "Village Comparison",
+    "TRENDS": "Growth Trends",
+    "RESOURCES": "Resource Distribution",
+    "INSIGHTS": "AI Insights"
+  }
+}

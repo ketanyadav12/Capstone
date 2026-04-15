@@ -1,0 +1,18 @@
+{
+  "HEADER": {
+    "TITLE": "ਸਮਾਰਟ ਵਿਲੇਜ ਡੈਸ਼ਬੋਰਡ",
+    "ADD_DATA": "ਡੇਟਾ ਸ਼ਾਮਲ ਕਰੋ",
+    "LANGUAGE": "ਭਾਸ਼ਾ"
+  },
+  "SIDEBAR": {
+    "DASHBOARD": "ਡੈਸ਼ਬੋਰਡ",
+    "MAP": "ਨਕਸ਼ਾ",
+    "LOGOUT": "ਲਾਗ ਆਉਟ"
+  },
+  "DASH": {
+    "COMPARISON": "ਪਿੰਡ ਦੀ ਤੁਲਨਾ",
+    "TRENDS": "ਵਿਕਾਸ ਦੇ ਰੁਝਾਨ",
+    "RESOURCES": "ਸਰੋਤ ਵੰਡ",
+    "INSIGHTS": "ਏਆਈ ਇਨਸਾਈਟਸ"
+  }
+}

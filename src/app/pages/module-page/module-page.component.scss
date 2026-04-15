@@ -1,0 +1,23 @@
+.summary-card {
+  border: 1px solid var(--border-soft);
+}
+
+h5 {
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.table th,
+.table td {
+  color: var(--text-main);
+  border-color: var(--border-soft);
+}
+
+.table thead th {
+  background: rgba(37, 99, 235, 0.08);
+}
+
+.chart-wrap {
+  height: 320px;
+  width: 100%;
+}
