@@ -6,6 +6,11 @@
   border: none;
 }
 
+.insight-list {
+  max-height: 180px;
+  overflow: auto;
+}
+
 .stat-title {
   color: #f8fafc;
   font-weight: 500;
@@ -42,12 +47,12 @@ h4 {
   background: linear-gradient(135deg, #4f46e5, #6366f1);
 }
 
-.chart-card {
-  padding: 1.1rem;
+.table th,
+.table td {
+  border-color: var(--border-soft);
+  color: var(--text-main);
 }
 
-.chart-container {
-  position: relative;
-  width: 100%;
-  height: 320px;
+.table thead th {
+  background: rgba(37, 99, 235, 0.08);
 }

@@ -2,7 +2,7 @@
   <aside class="sidebar" [class.open]="isSidebarOpen">
     <div class="sidebar-brand">
       <i class="fa-solid fa-city me-2"></i>
-      Smart Village
+      {{ 'APP.BRAND' | t }}
     </div>
 
     <nav class="sidebar-nav">
@@ -14,7 +14,7 @@
           (click)="closeSidebarOnMobile()"
         >
           <i [class]="item.icon"></i>
-          <span>{{ item.label }}</span>
+          <span>{{ item.label | t }}</span>
         </a>
     </nav>
   </aside>
@@ -25,13 +25,16 @@
         <button class="btn btn-sm btn-outline-primary d-lg-none" (click)="toggleSidebar()">
           <i class="fa-solid fa-bars"></i>
         </button>
-        <h5 class="mb-0 section-title"><i class="fa-solid fa-layer-group text-primary me-2"></i>Smart Village Dashboard</h5>
+        <h5 class="mb-0 section-title"><i class="fa-solid fa-layer-group text-primary me-2"></i>{{ 'APP.TITLE' | t }}</h5>
       </div>
 
       <div class="d-flex align-items-center gap-3">
-        <button class="btn btn-sm btn-primary btn-modern" (click)="openAddDataModal()">
-          <i class="fa-solid fa-plus me-1"></i> Add Data
-        </button>
+        <div class="d-flex align-items-center gap-2">
+          <label for="langSelect" class="small mb-0">{{ 'HEADER.LANGUAGE' | t }}</label>
+          <select id="langSelect" class="form-select form-select-sm" name="selectedLanguage" [(ngModel)]="selectedLanguage" (change)="changeLanguage()">
+            <option *ngFor="let lang of languages" [value]="lang.code">{{ lang.label }}</option>
+          </select>
+        </div>
 
         <button class="icon-btn" aria-label="Notifications">
           <i class="fa-regular fa-bell"></i>
@@ -39,16 +42,16 @@
 
         <button class="btn btn-sm btn-modern btn-outline-success" (click)="toggleTheme()">
           <i class="fa-solid" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i>
-          {{ isDarkMode ? 'Light' : 'Dark' }}
+          {{ isDarkMode ? ('HEADER.LIGHT' | t) : ('HEADER.DARK' | t) }}
         </button>
 
         <div class="user-pill">
           <i class="fa-solid fa-user"></i>
-          <span>Admin</span>
+          <span>{{ currentRoleLabel === 'Admin' ? ('ROLE.ADMIN' | t) : ('ROLE.USER' | t) }}</span>
         </div>
 
         <button class="btn btn-sm btn-outline-danger btn-modern" (click)="logout()">
-          <i class="fa-solid fa-right-from-bracket me-1"></i>Logout
+          <i class="fa-solid fa-right-from-bracket me-1"></i>{{ 'HEADER.LOGOUT' | t }}
         </button>
       </div>
     </header>
@@ -56,53 +59,5 @@
     <main class="main-content">
       <router-outlet></router-outlet>
     </main>
-  </div>
-</div>
-
-<!-- Add Data Modal Overlay -->
-<div class="modal fade show d-block" tabindex="-1" *ngIf="isAddDataModalOpen" style="background: rgba(0,0,0,0.5);">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content modern-card border-0" style="background-color: var(--card-bg); color: var(--text-primary);">
-      <div class="modal-header border-bottom-0 pb-0">
-        <h5 class="modal-title section-title">Add Data</h5>
-        <button type="button" class="btn-close" aria-label="Close" (click)="closeAddDataModal()"></button>
-      </div>
-      <div class="modal-body">
-        <form (ngSubmit)="saveVillage()" #villageForm="ngForm">
-          <div class="mb-3">
-            <label class="form-label">Village Name</label>
-            <input type="text" class="form-control form-control-sm" placeholder="e.g. Navapur Village" [(ngModel)]="newVillage.name" name="name" required>
-          </div>
-          <div class="row g-2 mb-3">
-            <div class="col">
-              <label class="form-label">Latitude</label>
-              <input type="number" class="form-control form-control-sm" [(ngModel)]="newVillage.lat" name="lat">
-            </div>
-            <div class="col">
-              <label class="form-label">Longitude</label>
-              <input type="number" class="form-control form-control-sm" [(ngModel)]="newVillage.lng" name="lng">
-            </div>
-          </div>
-          <div class="row g-2 mb-3">
-            <div class="col">
-              <label class="form-label">Employment (%)</label>
-              <input type="number" class="form-control form-control-sm" [(ngModel)]="newVillage.employment" name="employment">
-            </div>
-            <div class="col">
-              <label class="form-label">Water (%)</label>
-              <input type="number" class="form-control form-control-sm" [(ngModel)]="newVillage.water" name="water">
-            </div>
-            <div class="col">
-              <label class="form-label">Literacy (%)</label>
-              <input type="number" class="form-control form-control-sm" [(ngModel)]="newVillage.literacy" name="literacy">
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer border-top-0 pt-0">
-        <button type="button" class="btn btn-sm btn-outline-secondary btn-modern" (click)="closeAddDataModal()">Cancel</button>
-        <button type="submit" class="btn btn-sm btn-primary btn-modern" (click)="saveVillage()">Save</button>
-      </div>
-    </div>
   </div>
 </div>

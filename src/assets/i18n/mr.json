@@ -1,18 +1,89 @@
 {
-  "HEADER": {
-    "TITLE": "स्मार्ट व्हिलेज डॅशबोर्ड",
-    "ADD_DATA": "डेटा जोडा",
-    "LANGUAGE": "भाषा"
+  "APP": {
+    "BRAND": "स्मार्ट व्हिलेज",
+    "TITLE": "स्मार्ट व्हिलेज डॅशबोर्ड"
   },
-  "SIDEBAR": {
-    "DASHBOARD": "डॅशबोर्ड",
-    "MAP": "नकाशा",
+  "HEADER": {
+    "LANGUAGE": "भाषा",
+    "DARK": "डार्क",
+    "LIGHT": "लाईट",
     "LOGOUT": "लॉगआउट"
   },
-  "DASH": {
-    "COMPARISON": "गावाची तुलना",
-    "TRENDS": "विकासाचे कल",
-    "RESOURCES": "संसाधन वितरण",
-    "INSIGHTS": "एआय अंतर्दृष्टी"
+  "ROLE": {
+    "ADMIN": "अॅडमिन",
+    "USER": "यूजर"
+  },
+  "NAV": {
+    "DASHBOARD": "डॅशबोर्ड",
+    "AGRICULTURE": "कृषी",
+    "HEALTH": "आरोग्य",
+    "EDUCATION": "शिक्षण",
+    "WATER": "जलसंपदा",
+    "MAP": "गाव नकाशा"
+  },
+  "LOGIN": {
+    "SIGN_IN": "पुढे जाण्यासाठी साइन इन करा",
+    "ADMIN_HELP": "अॅडमिन: admin@svd.local / admin123",
+    "USER_HELP": "यूजर: user@svd.local / user123",
+    "EMAIL": "ईमेल",
+    "EMAIL_PLACEHOLDER": "name@example.com",
+    "EMAIL_ERROR": "वैध ईमेल पत्ता टाका.",
+    "PASSWORD": "पासवर्ड",
+    "PASSWORD_PLACEHOLDER": "पासवर्ड टाका",
+    "PASSWORD_ERROR": "पासवर्ड किमान 6 अक्षरांचा असावा.",
+    "FORGOT": "पासवर्ड विसरलात?",
+    "BUTTON": "लॉगिन",
+    "INVALID": "अवैध माहिती. वैध अॅडमिन किंवा यूजर लॉगिन वापरा."
+  },
+  "COMMON": {
+    "VILLAGE": "गाव",
+    "VILLAGE_NAME": "गावाचे नाव",
+    "EMPLOYMENT": "रोजगार %",
+    "WATER": "पाणी %",
+    "LITERACY": "साक्षरता %",
+    "LATITUDE": "अक्षांश",
+    "LONGITUDE": "रेखांश",
+    "ACTION": "क्रिया",
+    "SAVE": "जतन करा",
+    "DELETE": "हटवा",
+    "PREVIOUS": "मागील",
+    "NEXT": "पुढील",
+    "PAGE": "पृष्ठ",
+    "OF": "पैकी"
+  },
+  "DASHBOARD": {
+    "ADD_TITLE": "गाव कार्यक्षमता डेटा जोडा",
+    "VILLAGE_PLACEHOLDER": "उदा. नवापूर",
+    "INSIGHTS": "एआय अंतर्दृष्टी",
+    "DATASET": "गाव डेटासेट",
+    "EMPTY": "अजून गाव कार्यक्षमता डेटा नाही. सुरुवात करण्यासाठी गाव कार्यक्षमता डेटा जोडा."
+  },
+  "MAP": {
+    "TITLE": "गाव नकाशा",
+    "ADD_TITLE": "स्थान डेटा जोडा",
+    "SELECT_VILLAGE": "अस्तित्वातील गाव निवडा (ऐच्छिक)",
+    "ADD_NEW": "नवीन गाव म्हणून जोडा",
+    "UPDATE_LOCATION": "स्थान अद्यतनित करा",
+    "SAVE_LOCATION": "स्थान जतन करा",
+    "VILLAGES": "गावे",
+    "EMPTY": "अजून नकाशा डेटा नाही. नकाशावर गावे दाखवण्यासाठी निर्देशांक जोडा."
+  },
+  "MODULES": {
+    "MODULE": "मॉड्यूल",
+    "ADD_TITLE": "जोडा",
+    "DATA": "डेटा",
+    "AREA": "क्षेत्र",
+    "STATUS": "स्थिती",
+    "SCORE": "स्कोर",
+    "UPDATED_ON": "अद्यतन दिनांक",
+    "SEARCH_AREA": "क्षेत्र शोधा",
+    "ALL_STATUS": "सर्व स्थिती",
+    "EMPTY_PREFIX": "अजून",
+    "EMPTY_SUFFIX": "डेटा नाही. वरचा फॉर्म वापरून पहिला रेकॉर्ड जोडा."
+  },
+  "STATUS": {
+    "GOOD": "चांगले",
+    "AVERAGE": "मध्यम",
+    "POOR": "कमकुवत"
   }
 }

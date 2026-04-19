@@ -13,6 +13,7 @@ export interface VillageMetric {
 }
 
 export interface ModuleRecord {
+  id: string;
   area: string;
   status: string;
   score: number;

@@ -17,7 +17,7 @@ export class AiInsightService {
           if (v.employment < 50) insights.push(`Warning: Low employment detected in ${v.name} (${v.employment}%).`);
           if (v.literacy >= 70 && v.employment >= 70 && v.water >= 70) insights.push(`Success: ${v.name} is performing exceptionally well!`);
         });
-        if (insights.length === 0) insights.push('All villages are operating within normal parameters.');
+        if (insights.length === 0) insights.push('No village data yet. Add data to generate insights.');
         return insights;
       })
     );

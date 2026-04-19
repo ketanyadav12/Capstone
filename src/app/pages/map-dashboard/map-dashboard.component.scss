@@ -5,6 +5,17 @@
   overflow: hidden;
 }
 
+.list-group-item {
+  border-color: var(--border-soft);
+  background: transparent;
+  color: var(--text-main);
+}
+
+.form-label {
+  font-size: 0.8rem;
+  margin-bottom: 0.2rem;
+}
+
 :host ::ng-deep .leaflet-popup-content-wrapper {
   border-radius: 10px;
 }

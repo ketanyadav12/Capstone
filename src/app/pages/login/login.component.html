@@ -1,32 +1,36 @@
 <section class="login-page">
   <div class="login-card modern-card p-4 p-md-5">
     <div class="text-center mb-4">
-      <h3 class="mb-1 section-title">Smart Village Dashboard</h3>
-      <p class="text-muted-custom mb-0">Sign in to continue</p>
+      <h3 class="mb-1 section-title">{{ 'APP.TITLE' | t }}</h3>
+      <p class="text-muted-custom mb-0">{{ 'LOGIN.SIGN_IN' | t }}</p>
+      <small class="d-block mt-2 text-muted-custom">{{ 'LOGIN.ADMIN_HELP' | t }}</small>
+      <small class="d-block text-muted-custom">{{ 'LOGIN.USER_HELP' | t }}</small>
     </div>
 
     <form [formGroup]="loginForm" (ngSubmit)="submit()" novalidate>
       <div class="mb-3">
-        <label class="form-label">Email</label>
-        <input type="email" class="form-control" formControlName="email" placeholder="name@example.com" />
+        <label class="form-label">{{ 'LOGIN.EMAIL' | t }}</label>
+        <input type="email" class="form-control" formControlName="email" [placeholder]="'LOGIN.EMAIL_PLACEHOLDER' | t" />
         <small class="text-danger" *ngIf="loginForm.controls.email.touched && loginForm.controls.email.invalid">
-          Enter a valid email address.
+          {{ 'LOGIN.EMAIL_ERROR' | t }}
         </small>
       </div>
 
       <div class="mb-2">
-        <label class="form-label">Password</label>
-        <input type="password" class="form-control" formControlName="password" placeholder="Enter password" />
+        <label class="form-label">{{ 'LOGIN.PASSWORD' | t }}</label>
+        <input type="password" class="form-control" formControlName="password" [placeholder]="'LOGIN.PASSWORD_PLACEHOLDER' | t" />
         <small class="text-danger" *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid">
-          Password must be at least 6 characters.
+          {{ 'LOGIN.PASSWORD_ERROR' | t }}
         </small>
       </div>
 
       <div class="text-end mb-3">
-        <a href="javascript:void(0)" class="forgot-link">Forgot password?</a>
+        <a href="javascript:void(0)" class="forgot-link">{{ 'LOGIN.FORGOT' | t }}</a>
       </div>
 
-      <button class="btn btn-primary w-100 btn-modern" type="submit">Login</button>
+      <button class="btn btn-primary w-100 btn-modern" type="submit">{{ 'LOGIN.BUTTON' | t }}</button>
+
+      <p class="text-danger small mt-3 mb-0" *ngIf="errorMessage">{{ 'LOGIN.INVALID' | t }}</p>
     </form>
   </div>
 </section>

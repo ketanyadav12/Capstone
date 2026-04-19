@@ -1,55 +1,66 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import {
-  Chart,
-  BarController,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-  Legend,
-  Tooltip
-} from 'chart.js';
 import { ModuleRecord, SummaryStat } from '../../models';
-
-Chart.register(BarController, BarElement, CategoryScale, LinearScale, Legend, Tooltip);
+import { ModuleDataService } from '../../services/module-data.service';
+import { AuthService } from '../../services/auth.service';
+import { Subscription } from 'rxjs';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-module-page',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslatePipe],
   templateUrl: './module-page.component.html',
   styleUrl: './module-page.component.scss'
 })
-export class ModulePageComponent implements OnInit, AfterViewInit {
+export class ModulePageComponent implements OnInit, OnDestroy {
   moduleTitle = 'Module';
   searchTerm = '';
   selectedFilter = 'All';
   currentPage = 1;
   readonly pageSize = 5;
+  private readonly sub = new Subscription();
 
-  summaryCards: SummaryStat[] = [];
-
-  allData: ModuleRecord[] = [
-    { area: 'North Cluster', status: 'Good', score: 84, updatedOn: '2026-03-11' },
-    { area: 'South Cluster', status: 'Average', score: 67, updatedOn: '2026-03-10' },
-    { area: 'East Cluster', status: 'Good', score: 79, updatedOn: '2026-03-09' },
-    { area: 'West Cluster', status: 'Poor', score: 52, updatedOn: '2026-03-09' },
-    { area: 'Central Cluster', status: 'Average', score: 63, updatedOn: '2026-03-08' },
-    { area: 'Hill Zone', status: 'Good', score: 81, updatedOn: '2026-03-07' },
-    { area: 'River Belt', status: 'Average', score: 69, updatedOn: '2026-03-06' }
+  summaryCards: SummaryStat[] = [
+    { title: 'Total Records', value: '0', icon: 'fa-solid fa-table-list', colorClass: 'bg-primary-subtle' },
+    { title: 'Good Status', value: '0', icon: 'fa-solid fa-circle-check', colorClass: 'bg-success-subtle' },
+    { title: 'Average Score', value: '0', icon: 'fa-solid fa-gauge-high', colorClass: 'bg-info-subtle' }
   ];
 
-  constructor(private readonly route: ActivatedRoute) {}
+  newRecord = {
+    area: '',
+    status: 'Average',
+    score: 0,
+    updatedOn: this.getToday()
+  };
+
+  allData: ModuleRecord[] = [];
+
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly moduleDataService: ModuleDataService,
+    private readonly authService: AuthService
+  ) {}
+
+  get canEdit(): boolean {
+    return this.authService.isAdmin();
+  }
 
   ngOnInit(): void {
     this.moduleTitle = this.route.snapshot.data['moduleType'] ?? 'Module';
-    this.summaryCards = this.getSummaryCards(this.moduleTitle);
+    this.sub.add(
+      this.moduleDataService.getRecords(this.moduleTitle).subscribe((records) => {
+        this.allData = records;
+        this.currentPage = Math.min(this.currentPage, this.totalPages);
+        this.refreshSummaryCards();
+      })
+    );
   }
 
-  ngAfterViewInit(): void {
-    this.renderModuleChart();
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   get filteredData(): ModuleRecord[] {
@@ -81,55 +92,60 @@ export class ModulePageComponent implements OnInit, AfterViewInit {
     this.currentPage = 1;
   }
 
-  private getSummaryCards(moduleTitle: string): SummaryStat[] {
-    if (moduleTitle === 'Health') {
-      return [
-        { title: 'Vaccination Rate', value: '88%', icon: 'fa-solid fa-syringe', colorClass: 'bg-success-subtle' },
-        { title: 'Disease Cases', value: '142', icon: 'fa-solid fa-virus', colorClass: 'bg-danger-subtle' },
-        { title: 'Hospital Access', value: '64%', icon: 'fa-solid fa-hospital', colorClass: 'bg-primary-subtle' }
-      ];
+  addRecord(): void {
+    if (!this.canEdit) {
+      return;
     }
 
-    if (moduleTitle === 'Education') {
-      return [
-        { title: 'School Enrollment', value: '91%', icon: 'fa-solid fa-school', colorClass: 'bg-primary-subtle' },
-        { title: 'Dropout Cases', value: '37', icon: 'fa-solid fa-user-minus', colorClass: 'bg-warning-subtle' },
-        { title: 'Teacher Availability', value: '72%', icon: 'fa-solid fa-chalkboard-user', colorClass: 'bg-success-subtle' }
-      ];
+    const area = this.newRecord.area.trim();
+    if (!area) {
+      return;
     }
 
-    if (moduleTitle === 'Agriculture') {
-      return [
-        { title: 'Crop Yield', value: '74%', icon: 'fa-solid fa-wheat-awn', colorClass: 'bg-success-subtle' },
-        { title: 'Irrigation Coverage', value: '69%', icon: 'fa-solid fa-tractor', colorClass: 'bg-primary-subtle' },
-        { title: 'Farmer Training', value: '58%', icon: 'fa-solid fa-people-group', colorClass: 'bg-info-subtle' }
-      ];
+    this.moduleDataService.addRecord(this.moduleTitle, {
+      area,
+      status: this.newRecord.status,
+      score: this.clampScore(this.newRecord.score),
+      updatedOn: this.newRecord.updatedOn || this.getToday()
+    });
+
+    this.newRecord = {
+      area: '',
+      status: 'Average',
+      score: 0,
+      updatedOn: this.getToday()
+    };
+    this.onFilterChanged();
+  }
+
+  deleteRecord(recordId: string): void {
+    if (!this.canEdit) {
+      return;
     }
 
-    return [
-      { title: 'Water Purity', value: '81%', icon: 'fa-solid fa-filter', colorClass: 'bg-success-subtle' },
-      { title: 'Supply Interruptions', value: '22', icon: 'fa-solid fa-ban', colorClass: 'bg-danger-subtle' },
-      { title: 'Storage Capacity', value: '67%', icon: 'fa-solid fa-database', colorClass: 'bg-primary-subtle' }
+    this.moduleDataService.deleteRecord(this.moduleTitle, recordId);
+  }
+
+  private refreshSummaryCards(): void {
+    const total = this.allData.length;
+    const goodCount = this.allData.filter((record) => record.status === 'Good').length;
+    const avgScore = Math.round(this.allData.reduce((sum, record) => sum + record.score, 0) / (total || 1));
+
+    this.summaryCards = [
+      { title: 'Total Records', value: `${total}`, icon: 'fa-solid fa-table-list', colorClass: 'bg-primary-subtle' },
+      { title: 'Good Status', value: `${goodCount}`, icon: 'fa-solid fa-circle-check', colorClass: 'bg-success-subtle' },
+      { title: 'Average Score', value: `${avgScore}`, icon: 'fa-solid fa-gauge-high', colorClass: 'bg-info-subtle' }
     ];
   }
 
-  private renderModuleChart(): void {
-    new Chart('moduleChart', {
-      type: 'bar',
-      data: {
-        labels: this.allData.map((item) => item.area),
-        datasets: [
-          {
-            label: `${this.moduleTitle} Score`,
-            data: this.allData.map((item) => item.score),
-            backgroundColor: '#2563EB'
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false
-      }
-    });
+  private clampScore(score: number): number {
+    if (Number.isNaN(score)) {
+      return 0;
+    }
+    return Math.max(0, Math.min(100, score));
+  }
+
+  private getToday(): string {
+    return new Date().toISOString().slice(0, 10);
   }
 }

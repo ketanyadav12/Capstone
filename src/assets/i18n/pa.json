@@ -1,18 +1,89 @@
 {
+  "APP": {
+    "BRAND": "ਸਮਾਰਟ ਵਿਲੇਜ",
+    "TITLE": "ਸਮਾਰਟ ਵਿਲੇਜ ਡੈਸ਼ਬੋਰਡ"
+  },
   "HEADER": {
-    "TITLE": "ਸਮਾਰਟ ਵਿਲੇਜ ਡੈਸ਼ਬੋਰਡ",
-    "ADD_DATA": "ਡੇਟਾ ਸ਼ਾਮਲ ਕਰੋ",
-    "LANGUAGE": "ਭਾਸ਼ਾ"
+    "LANGUAGE": "ਭਾਸ਼ਾ",
+    "DARK": "ਡਾਰਕ",
+    "LIGHT": "ਲਾਈਟ",
+    "LOGOUT": "ਲੌਗ ਆਉਟ"
   },
-  "SIDEBAR": {
+  "ROLE": {
+    "ADMIN": "ਐਡਮਿਨ",
+    "USER": "ਯੂਜ਼ਰ"
+  },
+  "NAV": {
     "DASHBOARD": "ਡੈਸ਼ਬੋਰਡ",
-    "MAP": "ਨਕਸ਼ਾ",
-    "LOGOUT": "ਲਾਗ ਆਉਟ"
+    "AGRICULTURE": "ਖੇਤੀਬਾੜੀ",
+    "HEALTH": "ਸਿਹਤ",
+    "EDUCATION": "ਸ਼ਿਖਿਆ",
+    "WATER": "ਜਲ ਸਰੋਤ",
+    "MAP": "ਪਿੰਡ ਨਕਸ਼ਾ"
   },
-  "DASH": {
-    "COMPARISON": "ਪਿੰਡ ਦੀ ਤੁਲਨਾ",
-    "TRENDS": "ਵਿਕਾਸ ਦੇ ਰੁਝਾਨ",
-    "RESOURCES": "ਸਰੋਤ ਵੰਡ",
-    "INSIGHTS": "ਏਆਈ ਇਨਸਾਈਟਸ"
+  "LOGIN": {
+    "SIGN_IN": "ਜਾਰੀ ਰੱਖਣ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ",
+    "ADMIN_HELP": "ਐਡਮਿਨ: admin@svd.local / admin123",
+    "USER_HELP": "ਯੂਜ਼ਰ: user@svd.local / user123",
+    "EMAIL": "ਈਮੇਲ",
+    "EMAIL_PLACEHOLDER": "name@example.com",
+    "EMAIL_ERROR": "ਵੈਧ ਈਮੇਲ ਪਤਾ ਦਿਓ।",
+    "PASSWORD": "ਪਾਸਵਰਡ",
+    "PASSWORD_PLACEHOLDER": "ਪਾਸਵਰਡ ਦਰਜ ਕਰੋ",
+    "PASSWORD_ERROR": "ਪਾਸਵਰਡ ਘੱਟੋ-ਘੱਟ 6 ਅੱਖਰਾਂ ਦਾ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।",
+    "FORGOT": "ਪਾਸਵਰਡ ਭੁੱਲ ਗਏ?",
+    "BUTTON": "ਲੌਗਿਨ",
+    "INVALID": "ਗਲਤ ਜਾਣਕਾਰੀ। ਵੈਧ ਐਡਮਿਨ ਜਾਂ ਯੂਜ਼ਰ ਲੌਗਿਨ ਵਰਤੋ।"
+  },
+  "COMMON": {
+    "VILLAGE": "ਪਿੰਡ",
+    "VILLAGE_NAME": "ਪਿੰਡ ਦਾ ਨਾਮ",
+    "EMPLOYMENT": "ਰੋਜ਼ਗਾਰ %",
+    "WATER": "ਪਾਣੀ %",
+    "LITERACY": "ਸਾਖਰਤਾ %",
+    "LATITUDE": "ਅਕਸ਼ਾਂਸ਼",
+    "LONGITUDE": "ਦੇਸ਼ਾਂਤਰ",
+    "ACTION": "ਕਾਰਵਾਈ",
+    "SAVE": "ਸੇਵ ਕਰੋ",
+    "DELETE": "ਹਟਾਓ",
+    "PREVIOUS": "ਪਿਛਲਾ",
+    "NEXT": "ਅਗਲਾ",
+    "PAGE": "ਪੰਨਾ",
+    "OF": "ਵਿੱਚੋਂ"
+  },
+  "DASHBOARD": {
+    "ADD_TITLE": "ਪਿੰਡ ਪ੍ਰਦਰਸ਼ਨ ਡੇਟਾ ਸ਼ਾਮਲ ਕਰੋ",
+    "VILLAGE_PLACEHOLDER": "ਜਿਵੇਂ: ਨਵਾਪੁਰ",
+    "INSIGHTS": "ਏਆਈ ਇਨਸਾਈਟਸ",
+    "DATASET": "ਪਿੰਡ ਡੇਟਾਸੈੱਟ",
+    "EMPTY": "ਹਾਲੇ ਤੱਕ ਪਿੰਡ ਪ੍ਰਦਰਸ਼ਨ ਡੇਟਾ ਨਹੀਂ ਹੈ। ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਪਿੰਡ ਪ੍ਰਦਰਸ਼ਨ ਡੇਟਾ ਸ਼ਾਮਲ ਕਰੋ।"
+  },
+  "MAP": {
+    "TITLE": "ਪਿੰਡ ਨਕਸ਼ਾ",
+    "ADD_TITLE": "ਲੋਕੇਸ਼ਨ ਡੇਟਾ ਸ਼ਾਮਲ ਕਰੋ",
+    "SELECT_VILLAGE": "ਮੌਜੂਦਾ ਪਿੰਡ ਚੁਣੋ (ਵਿਕਲਪਿਕ)",
+    "ADD_NEW": "ਨਵੇਂ ਪਿੰਡ ਵਜੋਂ ਸ਼ਾਮਲ ਕਰੋ",
+    "UPDATE_LOCATION": "ਲੋਕੇਸ਼ਨ ਅਪਡੇਟ ਕਰੋ",
+    "SAVE_LOCATION": "ਲੋਕੇਸ਼ਨ ਸੇਵ ਕਰੋ",
+    "VILLAGES": "ਪਿੰਡ",
+    "EMPTY": "ਹਾਲੇ ਤੱਕ ਨਕਸ਼ਾ ਡੇਟਾ ਨਹੀਂ ਹੈ। ਨਕਸ਼ੇ 'ਤੇ ਪਿੰਡ ਦਿਖਾਉਣ ਲਈ ਕੋਆਰਡੀਨੇਟ ਸ਼ਾਮਲ ਕਰੋ।"
+  },
+  "MODULES": {
+    "MODULE": "ਮੋਡੀਊਲ",
+    "ADD_TITLE": "ਸ਼ਾਮਲ ਕਰੋ",
+    "DATA": "ਡੇਟਾ",
+    "AREA": "ਖੇਤਰ",
+    "STATUS": "ਸਥਿਤੀ",
+    "SCORE": "ਸਕੋਰ",
+    "UPDATED_ON": "ਅਪਡੇਟ ਮਿਤੀ",
+    "SEARCH_AREA": "ਖੇਤਰ ਖੋਜੋ",
+    "ALL_STATUS": "ਸਭ ਸਥਿਤੀਆਂ",
+    "EMPTY_PREFIX": "ਹਾਲੇ",
+    "EMPTY_SUFFIX": "ਡੇਟਾ ਨਹੀਂ ਹੈ। ਉੱਪਰਲੇ ਫਾਰਮ ਨਾਲ ਪਹਿਲਾ ਰਿਕਾਰਡ ਸ਼ਾਮਲ ਕਰੋ।"
+  },
+  "STATUS": {
+    "GOOD": "ਚੰਗਾ",
+    "AVERAGE": "ਔਸਤ",
+    "POOR": "ਕਮਜ਼ੋਰ"
   }
 }

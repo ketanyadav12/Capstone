@@ -1,6 +1,41 @@
 <section>
   <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-    <h4 class="section-title mb-0"><i class="fa-solid fa-border-all text-primary me-2"></i>{{ moduleTitle }} Module</h4>
+    <h4 class="section-title mb-0"><i class="fa-solid fa-border-all text-primary me-2"></i>{{ moduleTitle }} {{ 'MODULES.MODULE' | t }}</h4>
+  </div>
+
+  <div class="modern-card p-3 mb-3" *ngIf="canEdit">
+    <h6 class="section-title mb-3"><i class="fa-solid fa-plus text-primary me-2"></i>{{ 'MODULES.ADD_TITLE' | t }} {{ moduleTitle }} {{ 'MODULES.DATA' | t }}</h6>
+    <form class="row g-2" (ngSubmit)="addRecord()">
+      <div class="col-md-4">
+        <label class="form-label">{{ 'MODULES.AREA' | t }}</label>
+        <input type="text" class="form-control" name="area" [(ngModel)]="newRecord.area" required />
+      </div>
+
+      <div class="col-md-2">
+        <label class="form-label">{{ 'MODULES.STATUS' | t }}</label>
+        <select class="form-select" name="status" [(ngModel)]="newRecord.status">
+          <option value="Good">{{ 'STATUS.GOOD' | t }}</option>
+          <option value="Average">{{ 'STATUS.AVERAGE' | t }}</option>
+          <option value="Poor">{{ 'STATUS.POOR' | t }}</option>
+        </select>
+      </div>
+
+      <div class="col-md-2">
+        <label class="form-label">{{ 'MODULES.SCORE' | t }}</label>
+        <input type="number" min="0" max="100" class="form-control" name="score" [(ngModel)]="newRecord.score" required />
+      </div>
+
+      <div class="col-md-2">
+        <label class="form-label">{{ 'MODULES.UPDATED_ON' | t }}</label>
+        <input type="date" class="form-control" name="updatedOn" [(ngModel)]="newRecord.updatedOn" required />
+      </div>
+
+      <div class="col-md-2 d-flex align-items-end">
+        <button class="btn btn-primary w-100" type="submit">
+          <i class="fa-solid fa-floppy-disk me-1"></i>{{ 'COMMON.SAVE' | t }}
+        </button>
+      </div>
+    </form>
   </div>
 
   <div class="row g-3 mb-4">
@@ -21,29 +56,30 @@
         <input
           type="text"
           class="form-control"
-          placeholder="Search area"
+          [placeholder]="'MODULES.SEARCH_AREA' | t"
           [(ngModel)]="searchTerm"
           (input)="onFilterChanged()"
         />
       </div>
       <div class="col-md-4">
         <select class="form-select" [(ngModel)]="selectedFilter" (change)="onFilterChanged()">
-          <option value="All">All Status</option>
-          <option value="Good">Good</option>
-          <option value="Average">Average</option>
-          <option value="Poor">Poor</option>
+          <option value="All">{{ 'MODULES.ALL_STATUS' | t }}</option>
+          <option value="Good">{{ 'STATUS.GOOD' | t }}</option>
+          <option value="Average">{{ 'STATUS.AVERAGE' | t }}</option>
+          <option value="Poor">{{ 'STATUS.POOR' | t }}</option>
         </select>
       </div>
     </div>
 
     <div class="table-responsive">
-      <table class="table align-middle mb-0">
+      <table class="table align-middle mb-0" *ngIf="paginatedData.length > 0; else emptyModuleData">
         <thead>
           <tr>
-            <th>Area</th>
-            <th>Status</th>
-            <th>Score</th>
-            <th>Updated On</th>
+            <th>{{ 'MODULES.AREA' | t }}</th>
+            <th>{{ 'MODULES.STATUS' | t }}</th>
+            <th>{{ 'MODULES.SCORE' | t }}</th>
+            <th>{{ 'MODULES.UPDATED_ON' | t }}</th>
+            <th class="text-end" *ngIf="canEdit">{{ 'COMMON.ACTION' | t }}</th>
           </tr>
         </thead>
         <tbody>
@@ -54,30 +90,34 @@
                 'text-bg-success': row.status === 'Good',
                 'text-bg-warning': row.status === 'Average',
                 'text-bg-danger': row.status === 'Poor'
-              }">{{ row.status }}</span>
+              }">{{ ('STATUS.' + row.status.toUpperCase()) | t }}</span>
             </td>
             <td>{{ row.score }}</td>
             <td>{{ row.updatedOn }}</td>
+            <td class="text-end" *ngIf="canEdit">
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteRecord(row.id)">
+                <i class="fa-solid fa-trash me-1"></i>{{ 'COMMON.DELETE' | t }}
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
+
+      <ng-template #emptyModuleData>
+        <div class="alert alert-light border mb-0">
+          {{ 'MODULES.EMPTY_PREFIX' | t }} {{ moduleTitle }} {{ 'MODULES.EMPTY_SUFFIX' | t }}
+        </div>
+      </ng-template>
     </div>
 
     <div class="d-flex justify-content-end align-items-center gap-2 mt-3">
       <button class="btn btn-sm btn-outline-primary" (click)="previousPage()" [disabled]="currentPage === 1">
-        <i class="fa-solid fa-chevron-left me-1"></i>Previous
+        <i class="fa-solid fa-chevron-left me-1"></i>{{ 'COMMON.PREVIOUS' | t }}
       </button>
-      <span class="small">Page {{ currentPage }} of {{ totalPages }}</span>
+      <span class="small">{{ 'COMMON.PAGE' | t }} {{ currentPage }} {{ 'COMMON.OF' | t }} {{ totalPages }}</span>
       <button class="btn btn-sm btn-outline-primary" (click)="nextPage()" [disabled]="currentPage === totalPages">
-        Next<i class="fa-solid fa-chevron-right ms-1"></i>
+        {{ 'COMMON.NEXT' | t }}<i class="fa-solid fa-chevron-right ms-1"></i>
       </button>
-    </div>
-  </div>
-
-  <div class="modern-card p-3">
-    <h6 class="section-title mb-3"><i class="fa-solid fa-chart-column text-primary me-2"></i>{{ moduleTitle }} Performance Overview</h6>
-    <div class="chart-wrap">
-      <canvas id="moduleChart"></canvas>
     </div>
   </div>
 </section>

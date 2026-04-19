@@ -1,13 +1,47 @@
 <section class="container-fluid px-0">
-  <div class="row g-3 mb-3" *ngIf="insights.length > 0">
-    <div class="col-12">
-      <div class="modern-card p-3 border-start border-4 border-info">
-        <h6 class="mb-2 text-info"><i class="fa-solid fa-robot me-2"></i>AI Insights</h6>
-        <div class="d-flex text-muted small" style="overflow: hidden;">
-          <marquee behavior="scroll" direction="left">
-            <span class="me-4" *ngFor="let insight of insights"><i class="fa-solid fa-circle-info me-1"></i>{{ insight }}</span>
-          </marquee>
-        </div>
+  <div class="row g-3 mb-4">
+    <div class="col-12 col-xl-7" *ngIf="canEdit">
+      <div class="modern-card p-3">
+        <h6 class="section-title mb-3"><i class="fa-solid fa-plus text-primary me-2"></i>{{ 'DASHBOARD.ADD_TITLE' | t }}</h6>
+        <form class="row g-2" (ngSubmit)="addVillageMetrics()">
+          <div class="col-md-4">
+            <label class="form-label">{{ 'COMMON.VILLAGE_NAME' | t }}</label>
+            <input
+              type="text"
+              class="form-control"
+              name="name"
+              [(ngModel)]="newVillageData.name"
+              [placeholder]="'DASHBOARD.VILLAGE_PLACEHOLDER' | t"
+              required
+            />
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">{{ 'COMMON.EMPLOYMENT' | t }}</label>
+            <input type="number" class="form-control" name="employment" [(ngModel)]="newVillageData.employment" min="0" max="100" required />
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">{{ 'COMMON.WATER' | t }}</label>
+            <input type="number" class="form-control" name="water" [(ngModel)]="newVillageData.water" min="0" max="100" required />
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">{{ 'COMMON.LITERACY' | t }}</label>
+            <input type="number" class="form-control" name="literacy" [(ngModel)]="newVillageData.literacy" min="0" max="100" required />
+          </div>
+          <div class="col-md-2 d-flex align-items-end">
+            <button class="btn btn-primary w-100" type="submit">
+              <i class="fa-solid fa-floppy-disk me-1"></i>{{ 'COMMON.SAVE' | t }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-12 col-xl-5" *ngIf="insights.length > 0">
+      <div class="modern-card p-3 h-100 border-start border-4 border-info">
+        <h6 class="mb-2 text-info"><i class="fa-solid fa-robot me-2"></i>{{ 'DASHBOARD.INSIGHTS' | t }}</h6>
+        <ul class="mb-0 small ps-3 insight-list">
+          <li *ngFor="let insight of insights">{{ insight }}</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -27,30 +61,42 @@
   </div>
 
   <div class="row g-3">
-    <div class="col-12 col-xl-6">
-      <div class="modern-card chart-card">
-        <h6 class="section-title mb-3"><i class="fa-solid fa-chart-bar text-primary me-2"></i>Village Comparison</h6>
-        <div class="chart-container">
-          <canvas id="barChart"></canvas>
-        </div>
-      </div>
-    </div>
+    <div class="col-12">
+      <div class="modern-card p-3">
+        <h6 class="section-title mb-3"><i class="fa-solid fa-table text-primary me-2"></i>{{ 'DASHBOARD.DATASET' | t }}</h6>
 
-    <div class="col-12 col-xl-6">
-      <div class="modern-card chart-card">
-        <h6 class="section-title mb-3"><i class="fa-solid fa-chart-line text-success me-2"></i>Growth Trends</h6>
-        <div class="chart-container">
-          <canvas id="lineChart"></canvas>
+        <div class="table-responsive" *ngIf="villages.length > 0; else emptyVillageState">
+          <table class="table align-middle mb-0">
+            <thead>
+              <tr>
+                <th>{{ 'COMMON.VILLAGE' | t }}</th>
+                <th>{{ 'COMMON.EMPLOYMENT' | t }}</th>
+                <th>{{ 'COMMON.WATER' | t }}</th>
+                <th>{{ 'COMMON.LITERACY' | t }}</th>
+                <th class="text-end" *ngIf="canEdit">{{ 'COMMON.ACTION' | t }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let village of villages">
+                <td>{{ village.name }}</td>
+                <td>{{ village.employment }}</td>
+                <td>{{ village.water }}</td>
+                <td>{{ village.literacy }}</td>
+                <td class="text-end" *ngIf="canEdit">
+                  <button class="btn btn-sm btn-outline-danger" (click)="deleteVillage(village.id)">
+                    <i class="fa-solid fa-trash me-1"></i>{{ 'COMMON.DELETE' | t }}
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </div>
-    </div>
 
-    <div class="col-12 col-xl-5">
-      <div class="modern-card chart-card">
-        <h6 class="section-title mb-3"><i class="fa-solid fa-chart-pie text-info me-2"></i>Resource Distribution</h6>
-        <div class="chart-container">
-          <canvas id="pieChart"></canvas>
-        </div>
+        <ng-template #emptyVillageState>
+          <div class="alert alert-light border mb-0">
+            {{ 'DASHBOARD.EMPTY' | t }}
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>

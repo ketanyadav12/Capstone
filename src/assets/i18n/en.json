@@ -1,18 +1,89 @@
 {
-  "HEADER": {
-    "TITLE": "Smart Village Dashboard",
-    "ADD_DATA": "Add Data",
-    "LANGUAGE": "Language"
+  "APP": {
+    "BRAND": "Smart Village",
+    "TITLE": "Smart Village Dashboard"
   },
-  "SIDEBAR": {
-    "DASHBOARD": "Dashboard",
-    "MAP": "Map",
+  "HEADER": {
+    "LANGUAGE": "Language",
+    "DARK": "Dark",
+    "LIGHT": "Light",
     "LOGOUT": "Logout"
   },
-  "DASH": {
-    "COMPARISON": "Village Comparison",
-    "TRENDS": "Growth Trends",
-    "RESOURCES": "Resource Distribution",
-    "INSIGHTS": "AI Insights"
+  "ROLE": {
+    "ADMIN": "Admin",
+    "USER": "User"
+  },
+  "NAV": {
+    "DASHBOARD": "Dashboard",
+    "AGRICULTURE": "Agriculture",
+    "HEALTH": "Health",
+    "EDUCATION": "Education",
+    "WATER": "Water Resources",
+    "MAP": "Village Map"
+  },
+  "LOGIN": {
+    "SIGN_IN": "Sign in to continue",
+    "ADMIN_HELP": "Admin: admin@svd.local / admin123",
+    "USER_HELP": "User: user@svd.local / user123",
+    "EMAIL": "Email",
+    "EMAIL_PLACEHOLDER": "name@example.com",
+    "EMAIL_ERROR": "Enter a valid email address.",
+    "PASSWORD": "Password",
+    "PASSWORD_PLACEHOLDER": "Enter password",
+    "PASSWORD_ERROR": "Password must be at least 6 characters.",
+    "FORGOT": "Forgot password?",
+    "BUTTON": "Login",
+    "INVALID": "Invalid credentials. Use a valid admin or user login."
+  },
+  "COMMON": {
+    "VILLAGE": "Village",
+    "VILLAGE_NAME": "Village Name",
+    "EMPLOYMENT": "Employment %",
+    "WATER": "Water %",
+    "LITERACY": "Literacy %",
+    "LATITUDE": "Latitude",
+    "LONGITUDE": "Longitude",
+    "ACTION": "Action",
+    "SAVE": "Save",
+    "DELETE": "Delete",
+    "PREVIOUS": "Previous",
+    "NEXT": "Next",
+    "PAGE": "Page",
+    "OF": "of"
+  },
+  "DASHBOARD": {
+    "ADD_TITLE": "Add Village Performance Data",
+    "VILLAGE_PLACEHOLDER": "e.g. Navapur",
+    "INSIGHTS": "AI Insights",
+    "DATASET": "Village Dataset",
+    "EMPTY": "No village performance data yet. Use Add Village Performance Data to start."
+  },
+  "MAP": {
+    "TITLE": "Village Map",
+    "ADD_TITLE": "Add Location Data",
+    "SELECT_VILLAGE": "Select Existing Village (Optional)",
+    "ADD_NEW": "Add as New Village",
+    "UPDATE_LOCATION": "Update Location",
+    "SAVE_LOCATION": "Save Location",
+    "VILLAGES": "Villages",
+    "EMPTY": "No map data yet. Add coordinates to show villages on map."
+  },
+  "MODULES": {
+    "MODULE": "Module",
+    "ADD_TITLE": "Add",
+    "DATA": "Data",
+    "AREA": "Area",
+    "STATUS": "Status",
+    "SCORE": "Score",
+    "UPDATED_ON": "Updated On",
+    "SEARCH_AREA": "Search area",
+    "ALL_STATUS": "All Status",
+    "EMPTY_PREFIX": "No",
+    "EMPTY_SUFFIX": "data yet. Add your first record using the form above."
+  },
+  "STATUS": {
+    "GOOD": "Good",
+    "AVERAGE": "Average",
+    "POOR": "Poor"
   }
 }

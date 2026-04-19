@@ -1,71 +1,53 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  Chart,
-  BarController,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-  LineController,
-  LineElement,
-  PointElement,
-  PieController,
-  ArcElement,
-  Legend,
-  Tooltip
-} from 'chart.js';
+import { FormsModule } from '@angular/forms';
 import { SummaryStat } from '../../models';
 import { VillageDataService, VillageData } from '../../services/village-data.service';
 import { AiInsightService } from '../../services/ai-insight.service';
+import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
-Chart.register(
-  BarController,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-  LineController,
-  LineElement,
-  PointElement,
-  PieController,
-  ArcElement,
-  Legend,
-  Tooltip
-);
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, TranslatePipe],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
+export class DashboardComponent implements OnInit, OnDestroy {
   insights: string[] = [];
   villages: VillageData[] = [];
   private sub = new Subscription();
-  private charts: { [key: string]: Chart } = {};
+  newVillageData = {
+    name: '',
+    employment: 0,
+    water: 0,
+    literacy: 0
+  };
+
   stats: SummaryStat[] = [
     {
       title: 'Total Villages',
-      value: '128',
+      value: '0',
       icon: 'fa-solid fa-house-flag',
       colorClass: 'stat-blue'
     },
     {
-      title: 'Employment Rate',
-      value: '76%',
+      title: 'Avg Employment',
+      value: '0%',
       icon: 'fa-solid fa-briefcase',
       colorClass: 'stat-green'
     },
     {
-      title: 'Water Availability',
-      value: '82%',
+      title: 'Avg Water',
+      value: '0%',
       icon: 'fa-solid fa-faucet-drip',
       colorClass: 'stat-cyan'
     },
     {
-      title: 'Literacy Rate',
-      value: '71%',
+      title: 'Avg Literacy',
+      value: '0%',
       icon: 'fa-solid fa-book-open-reader',
       colorClass: 'stat-indigo'
     }
@@ -73,15 +55,19 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private readonly villageDataService: VillageDataService,
-    private readonly aiInsightService: AiInsightService
+    private readonly aiInsightService: AiInsightService,
+    private readonly authService: AuthService
   ) {}
+
+  get canEdit(): boolean {
+    return this.authService.isAdmin();
+  }
 
   ngOnInit(): void {
     this.sub.add(
       this.villageDataService.getVillages().subscribe(data => {
         this.villages = data;
         this.updateStats();
-        if (this.charts['barChart']) this.renderCharts(); // Re-render if already init
       })
     );
 
@@ -90,6 +76,41 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.insights = data;
       })
     );
+  }
+
+  addVillageMetrics(): void {
+    if (!this.canEdit) {
+      return;
+    }
+
+    const trimmedName = this.newVillageData.name.trim();
+    if (!trimmedName) {
+      return;
+    }
+
+    this.villageDataService.addVillage({
+      name: trimmedName,
+      lat: 22.5,
+      lng: 78.5,
+      employment: this.clampPercent(this.newVillageData.employment),
+      water: this.clampPercent(this.newVillageData.water),
+      literacy: this.clampPercent(this.newVillageData.literacy)
+    });
+
+    this.newVillageData = {
+      name: '',
+      employment: 0,
+      water: 0,
+      literacy: 0
+    };
+  }
+
+  deleteVillage(villageId: string): void {
+    if (!this.canEdit) {
+      return;
+    }
+
+    this.villageDataService.deleteVillage(villageId);
   }
 
   private updateStats(): void {
@@ -105,82 +126,15 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       { title: 'Avg Literacy', value: `${avgLit}%`, icon: 'fa-solid fa-book-open-reader', colorClass: 'stat-indigo' }
     ];
   }
-  ngAfterViewInit(): void {
-    setTimeout(() => this.renderCharts(), 100);
-  }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
-    Object.values(this.charts).forEach(c => c.destroy());
   }
 
-  private renderCharts(): void {
-    Object.values(this.charts).forEach(c => c.destroy());
-
-    const names = this.villages.map(v => v.name);
-    const empData = this.villages.map(v => v.employment);
-    
-    this.charts['barChart'] = new Chart('barChart', {
-      type: 'bar',
-      data: {
-        labels: names,
-        datasets: [
-          {
-            label: 'Employment %',
-            data: empData,
-            backgroundColor: '#2563EB'
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        onClick: (event, elements) => {
-          if (elements.length > 0) {
-             const idx = elements[0].index;
-             const village = this.villages[idx];
-             alert(`Drill-down: Showing detailed view for ${village.name} (Simulation)`);
-          }
-        }
-      }
-    });
-
-    this.charts['lineChart'] = new Chart('lineChart', {
-      type: 'line',
-      data: {
-        labels: ['2022', '2023', '2024', '2025', '2026'],
-        datasets: [
-          {
-            label: 'Growth Trend',
-            data: [45, 52, 60, 66, 74],
-            borderColor: '#10B981',
-            backgroundColor: 'rgba(16, 185, 129, 0.2)',
-            fill: true,
-            tension: 0.35
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false
-      }
-    });
-
-    this.charts['pieChart'] = new Chart('pieChart', {
-      type: 'pie',
-      data: {
-        labels: ['Agriculture', 'Education', 'Health', 'Water'],
-        datasets: [
-          {
-            data: [38, 22, 20, 20],
-            backgroundColor: ['#2563EB', '#10B981', '#60A5FA', '#34D399']
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false
-      }
-    });
+  private clampPercent(value: number): number {
+    if (Number.isNaN(value)) {
+      return 0;
+    }
+    return Math.max(0, Math.min(100, value));
   }
 }

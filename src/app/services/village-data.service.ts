@@ -15,7 +15,7 @@ export interface VillageData {
   providedIn: 'root'
 })
 export class VillageDataService {
-  private readonly STORAGE_KEY = 'smart_village_data_store';
+  private readonly STORAGE_KEY = 'smart_village_data_store_v2';
   private readonly villagesSubject: BehaviorSubject<VillageData[]>;
 
   constructor() {

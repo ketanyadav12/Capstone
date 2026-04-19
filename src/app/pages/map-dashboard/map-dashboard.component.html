@@ -1,22 +1,61 @@
 <section class="h-100 d-flex flex-column">
-  <h4 class="section-title mb-3">Village Map</h4>
+  <h4 class="section-title mb-3">{{ 'MAP.TITLE' | t }}</h4>
   <div class="row g-3 flex-grow-1">
     <div class="col-md-4 col-lg-3">
       <div class="modern-card p-3 h-100 d-flex flex-column">
-        <h6 class="mb-3">Villages</h6>
-        <!-- Simple list -->
-        <ul class="list-group list-group-flush flex-grow-1 overflow-auto">
-          <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-              *ngFor="let village of villages"
-              (click)="focusVillage(village)"
-              style="cursor: pointer;">
-            <div>
-              <strong>{{ village.name }}</strong><br>
-              <small class="text-muted">Water: {{ village.water }}%</small>
+        <h6 class="mb-3" *ngIf="canEdit">{{ 'MAP.ADD_TITLE' | t }}</h6>
+
+        <form class="mb-3" (ngSubmit)="saveLocationData()" *ngIf="canEdit">
+          <div class="mb-2">
+            <label class="form-label">{{ 'MAP.SELECT_VILLAGE' | t }}</label>
+            <select class="form-select form-select-sm" name="selectedVillageId" [(ngModel)]="selectedVillageId" (change)="onSelectedVillageChange()">
+              <option value="">{{ 'MAP.ADD_NEW' | t }}</option>
+              <option *ngFor="let village of villages" [value]="village.id">{{ village.name }}</option>
+            </select>
+          </div>
+
+          <div class="mb-2" *ngIf="!selectedVillageId">
+            <label class="form-label">{{ 'COMMON.VILLAGE_NAME' | t }}</label>
+            <input type="text" class="form-control form-control-sm" name="villageName" [(ngModel)]="locationForm.villageName" required />
+          </div>
+
+          <div class="row g-2 mb-2">
+            <div class="col">
+              <label class="form-label">{{ 'COMMON.LATITUDE' | t }}</label>
+              <input type="number" class="form-control form-control-sm" name="lat" [(ngModel)]="locationForm.lat" required />
             </div>
-            <span class="badge bg-primary rounded-pill">{{ ((village.employment + village.water + village.literacy) / 3) | number:'1.0-0' }}</span>
+            <div class="col">
+              <label class="form-label">{{ 'COMMON.LONGITUDE' | t }}</label>
+              <input type="number" class="form-control form-control-sm" name="lng" [(ngModel)]="locationForm.lng" required />
+            </div>
+          </div>
+
+          <button class="btn btn-sm btn-primary w-100" type="submit">
+            <i class="fa-solid fa-location-dot me-1"></i>
+            {{ selectedVillageId ? ('MAP.UPDATE_LOCATION' | t) : ('MAP.SAVE_LOCATION' | t) }}
+          </button>
+        </form>
+
+        <h6 class="mb-2">{{ 'MAP.VILLAGES' | t }}</h6>
+        <ul class="list-group list-group-flush flex-grow-1 overflow-auto" *ngIf="villages.length > 0; else emptyMapData">
+          <li class="list-group-item d-flex justify-content-between align-items-start" *ngFor="let village of villages">
+            <div>
+              <button class="btn btn-link btn-sm p-0 text-start" (click)="focusVillage(village)">
+                <strong>{{ village.name }}</strong>
+              </button>
+              <div class="small text-muted">{{ village.lat }}, {{ village.lng }}</div>
+            </div>
+            <button class="btn btn-sm btn-outline-danger" (click)="deleteVillage(village.id)" *ngIf="canEdit">
+              <i class="fa-solid fa-trash"></i>
+            </button>
           </li>
         </ul>
+
+        <ng-template #emptyMapData>
+          <div class="alert alert-light border mb-0 small">
+            {{ 'MAP.EMPTY' | t }}
+          </div>
+        </ng-template>
       </div>
     </div>
     <div class="col-md-8 col-lg-9">

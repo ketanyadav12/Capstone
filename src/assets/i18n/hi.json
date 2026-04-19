@@ -1,18 +1,89 @@
 {
-  "HEADER": {
-    "TITLE": "स्मार्ट विलेज डैशबोर्ड",
-    "ADD_DATA": "डेटा जोड़ें",
-    "LANGUAGE": "भाषा"
+  "APP": {
+    "BRAND": "स्मार्ट विलेज",
+    "TITLE": "स्मार्ट विलेज डैशबोर्ड"
   },
-  "SIDEBAR": {
-    "DASHBOARD": "डैशबोर्ड",
-    "MAP": "मानचित्र",
+  "HEADER": {
+    "LANGUAGE": "भाषा",
+    "DARK": "डार्क",
+    "LIGHT": "लाइट",
     "LOGOUT": "लॉग आउट"
   },
-  "DASH": {
-    "COMPARISON": "गाँव की तुलना",
-    "TRENDS": "विकास के रुझान",
-    "RESOURCES": "संसाधन वितरण",
-    "INSIGHTS": "एआई अंतर्दृष्टि"
+  "ROLE": {
+    "ADMIN": "एडमिन",
+    "USER": "यूज़र"
+  },
+  "NAV": {
+    "DASHBOARD": "डैशबोर्ड",
+    "AGRICULTURE": "कृषि",
+    "HEALTH": "स्वास्थ्य",
+    "EDUCATION": "शिक्षा",
+    "WATER": "जल संसाधन",
+    "MAP": "गांव मानचित्र"
+  },
+  "LOGIN": {
+    "SIGN_IN": "जारी रखने के लिए साइन इन करें",
+    "ADMIN_HELP": "एडमिन: admin@svd.local / admin123",
+    "USER_HELP": "यूज़र: user@svd.local / user123",
+    "EMAIL": "ईमेल",
+    "EMAIL_PLACEHOLDER": "name@example.com",
+    "EMAIL_ERROR": "कृपया सही ईमेल पता दर्ज करें।",
+    "PASSWORD": "पासवर्ड",
+    "PASSWORD_PLACEHOLDER": "पासवर्ड दर्ज करें",
+    "PASSWORD_ERROR": "पासवर्ड कम से कम 6 अक्षरों का होना चाहिए।",
+    "FORGOT": "पासवर्ड भूल गए?",
+    "BUTTON": "लॉगिन",
+    "INVALID": "अमान्य क्रेडेंशियल। कृपया सही एडमिन या यूज़र लॉगिन करें।"
+  },
+  "COMMON": {
+    "VILLAGE": "गांव",
+    "VILLAGE_NAME": "गांव का नाम",
+    "EMPLOYMENT": "रोजगार %",
+    "WATER": "पानी %",
+    "LITERACY": "साक्षरता %",
+    "LATITUDE": "अक्षांश",
+    "LONGITUDE": "देशांतर",
+    "ACTION": "कार्रवाई",
+    "SAVE": "सहेजें",
+    "DELETE": "हटाएं",
+    "PREVIOUS": "पिछला",
+    "NEXT": "अगला",
+    "PAGE": "पेज",
+    "OF": "में से"
+  },
+  "DASHBOARD": {
+    "ADD_TITLE": "गांव प्रदर्शन डेटा जोड़ें",
+    "VILLAGE_PLACEHOLDER": "उदा. नवापुर",
+    "INSIGHTS": "एआई अंतर्दृष्टि",
+    "DATASET": "गांव डेटा सेट",
+    "EMPTY": "अभी तक गांव प्रदर्शन डेटा नहीं है। शुरू करने के लिए गांव प्रदर्शन डेटा जोड़ें।"
+  },
+  "MAP": {
+    "TITLE": "गांव मानचित्र",
+    "ADD_TITLE": "लोकेशन डेटा जोड़ें",
+    "SELECT_VILLAGE": "मौजूदा गांव चुनें (वैकल्पिक)",
+    "ADD_NEW": "नया गांव जोड़ें",
+    "UPDATE_LOCATION": "लोकेशन अपडेट करें",
+    "SAVE_LOCATION": "लोकेशन सहेजें",
+    "VILLAGES": "गांव",
+    "EMPTY": "अभी तक मानचित्र डेटा नहीं है। मानचित्र पर गांव दिखाने के लिए निर्देशांक जोड़ें।"
+  },
+  "MODULES": {
+    "MODULE": "मॉड्यूल",
+    "ADD_TITLE": "जोड़ें",
+    "DATA": "डेटा",
+    "AREA": "क्षेत्र",
+    "STATUS": "स्थिति",
+    "SCORE": "स्कोर",
+    "UPDATED_ON": "अपडेट तिथि",
+    "SEARCH_AREA": "क्षेत्र खोजें",
+    "ALL_STATUS": "सभी स्थिति",
+    "EMPTY_PREFIX": "अभी",
+    "EMPTY_SUFFIX": "डेटा नहीं है। ऊपर दिए गए फॉर्म का उपयोग करके पहला रिकॉर्ड जोड़ें।"
+  },
+  "STATUS": {
+    "GOOD": "अच्छा",
+    "AVERAGE": "औसत",
+    "POOR": "कमज़ोर"
   }
 }
