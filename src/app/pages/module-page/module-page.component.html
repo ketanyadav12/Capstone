@@ -3,12 +3,44 @@
     <h4 class="section-title mb-0"><i class="fa-solid fa-border-all text-primary me-2"></i>{{ moduleTitle }} {{ 'MODULES.MODULE' | t }}</h4>
   </div>
 
+  <div class="modern-card p-3 mb-3">
+    <div class="row g-2 align-items-end">
+      <div class="col-md-6 col-lg-4">
+        <label class="form-label">{{ 'COMMON.VILLAGE' | t }}</label>
+        <select class="form-select" name="selectedVillageId" [(ngModel)]="selectedVillageId" (change)="onFilterChanged()">
+          <option [ngValue]="''" *ngIf="villages.length === 0">No villages available</option>
+          <option *ngFor="let village of villages" [ngValue]="village.id">
+            {{ village.name }}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-6 col-lg-8" *ngIf="!selectedVillageId">
+        <div class="alert alert-warning mb-0 py-2">
+          Select a village to view and add {{ moduleTitle }} data.
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modern-card p-3 mb-3" *ngIf="canEdit">
     <h6 class="section-title mb-3"><i class="fa-solid fa-plus text-primary me-2"></i>{{ 'MODULES.ADD_TITLE' | t }} {{ moduleTitle }} {{ 'MODULES.DATA' | t }}</h6>
     <form class="row g-2" (ngSubmit)="addRecord()">
       <div class="col-md-4">
-        <label class="form-label">{{ 'MODULES.AREA' | t }}</label>
-        <input type="text" class="form-control" name="area" [(ngModel)]="newRecord.area" required />
+        <label class="form-label">{{ primaryFieldLabel }}</label>
+        <input type="text" class="form-control" name="primaryValue" [(ngModel)]="newRecord.primaryValue" required />
+      </div>
+
+      <div class="col-md-2">
+        <label class="form-label">{{ metricFieldLabel }}</label>
+        <input
+          type="number"
+          class="form-control"
+          name="metricValue"
+          [(ngModel)]="newRecord.metricValue"
+          [min]="metricMin"
+          [max]="metricMax"
+          required
+        />
       </div>
 
       <div class="col-md-2">
@@ -31,7 +63,7 @@
       </div>
 
       <div class="col-md-2 d-flex align-items-end">
-        <button class="btn btn-primary w-100" type="submit">
+        <button class="btn btn-primary w-100" type="submit" [disabled]="!selectedVillageId">
           <i class="fa-solid fa-floppy-disk me-1"></i>{{ 'COMMON.SAVE' | t }}
         </button>
       </div>
@@ -75,7 +107,9 @@
       <table class="table align-middle mb-0" *ngIf="paginatedData.length > 0; else emptyModuleData">
         <thead>
           <tr>
-            <th>{{ 'MODULES.AREA' | t }}</th>
+            <th>{{ 'COMMON.VILLAGE' | t }}</th>
+            <th>{{ primaryFieldLabel }}</th>
+            <th>{{ metricFieldLabel }}</th>
             <th>{{ 'MODULES.STATUS' | t }}</th>
             <th>{{ 'MODULES.SCORE' | t }}</th>
             <th>{{ 'MODULES.UPDATED_ON' | t }}</th>
@@ -84,7 +118,9 @@
         </thead>
         <tbody>
           <tr *ngFor="let row of paginatedData">
-            <td>{{ row.area }}</td>
+            <td>{{ row.villageName || '-' }}</td>
+            <td>{{ getPrimaryValue(row) || '-' }}</td>
+            <td>{{ row.metricValue ?? '-' }}</td>
             <td>
               <span class="badge" [ngClass]="{
                 'text-bg-success': row.status === 'Good',

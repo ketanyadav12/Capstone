@@ -14,7 +14,11 @@ export interface VillageMetric {
 
 export interface ModuleRecord {
   id: string;
-  area: string;
+  villageId?: string;
+  villageName?: string;
+  area?: string;
+  primaryValue?: string;
+  metricValue?: number;
   status: string;
   score: number;
   updatedOn: string;

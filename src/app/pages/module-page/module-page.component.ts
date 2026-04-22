@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ModuleRecord, SummaryStat } from '../../models';
 import { ModuleDataService } from '../../services/module-data.service';
 import { AuthService } from '../../services/auth.service';
+import { VillageData, VillageDataService } from '../../services/village-data.service';
 import { Subscription } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 
@@ -16,7 +17,16 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
   styleUrl: './module-page.component.scss'
 })
 export class ModulePageComponent implements OnInit, OnDestroy {
+  private static readonly MODULE_FIELDS: Record<string, { primaryLabel: string; metricLabel: string; metricMin: number; metricMax: number }> = {
+    Agriculture: { primaryLabel: 'Agriculture Area', metricLabel: 'Crop Yield (tonnes)', metricMin: 0, metricMax: 1000 },
+    'Water Resources': { primaryLabel: 'Water Source Area', metricLabel: 'Supply Hours / Day', metricMin: 0, metricMax: 24 },
+    Education: { primaryLabel: 'School / Institution', metricLabel: 'Students Enrolled', metricMin: 0, metricMax: 50000 },
+    Health: { primaryLabel: 'Health Facility', metricLabel: 'Patients Served / Month', metricMin: 0, metricMax: 100000 }
+  };
+
   moduleTitle = 'Module';
+  villages: VillageData[] = [];
+  selectedVillageId = '';
   searchTerm = '';
   selectedFilter = 'All';
   currentPage = 1;
@@ -30,7 +40,8 @@ export class ModulePageComponent implements OnInit, OnDestroy {
   ];
 
   newRecord = {
-    area: '',
+    primaryValue: '',
+    metricValue: 0,
     status: 'Average',
     score: 0,
     updatedOn: this.getToday()
@@ -41,7 +52,8 @@ export class ModulePageComponent implements OnInit, OnDestroy {
   constructor(
     private readonly route: ActivatedRoute,
     private readonly moduleDataService: ModuleDataService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly villageDataService: VillageDataService
   ) {}
 
   get canEdit(): boolean {
@@ -50,6 +62,20 @@ export class ModulePageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.moduleTitle = this.route.snapshot.data['moduleType'] ?? 'Module';
+
+    this.sub.add(
+      this.villageDataService.getVillages().subscribe((villages) => {
+        this.villages = villages;
+        if (this.selectedVillageId && !villages.some((village) => village.id === this.selectedVillageId)) {
+          this.selectedVillageId = '';
+        }
+        if (!this.selectedVillageId && villages.length > 0) {
+          this.selectedVillageId = villages[0].id;
+        }
+        this.onFilterChanged();
+      })
+    );
+
     this.sub.add(
       this.moduleDataService.getRecords(this.moduleTitle).subscribe((records) => {
         this.allData = records;
@@ -64,11 +90,38 @@ export class ModulePageComponent implements OnInit, OnDestroy {
   }
 
   get filteredData(): ModuleRecord[] {
-    return this.allData.filter((row) => {
-      const matchedSearch = row.area.toLowerCase().includes(this.searchTerm.toLowerCase());
+    return this.villageScopedData.filter((row) => {
+      const matchedSearch = this.getPrimaryValue(row).toLowerCase().includes(this.searchTerm.toLowerCase());
       const matchedFilter = this.selectedFilter === 'All' || row.status === this.selectedFilter;
       return matchedSearch && matchedFilter;
     });
+  }
+
+  get primaryFieldLabel(): string {
+    return this.getModuleFieldConfig().primaryLabel;
+  }
+
+  get metricFieldLabel(): string {
+    return this.getModuleFieldConfig().metricLabel;
+  }
+
+  get metricMin(): number {
+    return this.getModuleFieldConfig().metricMin;
+  }
+
+  get metricMax(): number {
+    return this.getModuleFieldConfig().metricMax;
+  }
+
+  get selectedVillageName(): string {
+    return this.villages.find((village) => village.id === this.selectedVillageId)?.name ?? '';
+  }
+
+  private get villageScopedData(): ModuleRecord[] {
+    if (!this.selectedVillageId) {
+      return [];
+    }
+    return this.allData.filter((record) => record.villageId === this.selectedVillageId);
   }
 
   get paginatedData(): ModuleRecord[] {
@@ -90,6 +143,7 @@ export class ModulePageComponent implements OnInit, OnDestroy {
 
   onFilterChanged(): void {
     this.currentPage = 1;
+    this.refreshSummaryCards();
   }
 
   addRecord(): void {
@@ -97,20 +151,31 @@ export class ModulePageComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const area = this.newRecord.area.trim();
-    if (!area) {
+    if (!this.selectedVillageId) {
       return;
     }
 
+    const primaryValue = this.newRecord.primaryValue.trim();
+    if (!primaryValue) {
+      return;
+    }
+
+    const isAreaBasedModule = this.moduleTitle === 'Agriculture' || this.moduleTitle === 'Water Resources';
+
     this.moduleDataService.addRecord(this.moduleTitle, {
-      area,
+      villageId: this.selectedVillageId,
+      villageName: this.selectedVillageName,
+      area: isAreaBasedModule ? primaryValue : undefined,
+      primaryValue,
+      metricValue: this.clampMetric(this.newRecord.metricValue),
       status: this.newRecord.status,
       score: this.clampScore(this.newRecord.score),
       updatedOn: this.newRecord.updatedOn || this.getToday()
     });
 
     this.newRecord = {
-      area: '',
+      primaryValue: '',
+      metricValue: 0,
       status: 'Average',
       score: 0,
       updatedOn: this.getToday()
@@ -127,9 +192,10 @@ export class ModulePageComponent implements OnInit, OnDestroy {
   }
 
   private refreshSummaryCards(): void {
-    const total = this.allData.length;
-    const goodCount = this.allData.filter((record) => record.status === 'Good').length;
-    const avgScore = Math.round(this.allData.reduce((sum, record) => sum + record.score, 0) / (total || 1));
+    const scopedData = this.villageScopedData;
+    const total = scopedData.length;
+    const goodCount = scopedData.filter((record) => record.status === 'Good').length;
+    const avgScore = Math.round(scopedData.reduce((sum, record) => sum + record.score, 0) / (total || 1));
 
     this.summaryCards = [
       { title: 'Total Records', value: `${total}`, icon: 'fa-solid fa-table-list', colorClass: 'bg-primary-subtle' },
@@ -143,6 +209,26 @@ export class ModulePageComponent implements OnInit, OnDestroy {
       return 0;
     }
     return Math.max(0, Math.min(100, score));
+  }
+
+  private clampMetric(metricValue: number): number {
+    if (Number.isNaN(metricValue)) {
+      return this.metricMin;
+    }
+    return Math.max(this.metricMin, Math.min(this.metricMax, metricValue));
+  }
+
+  getPrimaryValue(record: ModuleRecord): string {
+    return record.primaryValue?.trim() || record.area?.trim() || '';
+  }
+
+  private getModuleFieldConfig(): { primaryLabel: string; metricLabel: string; metricMin: number; metricMax: number } {
+    return ModulePageComponent.MODULE_FIELDS[this.moduleTitle] ?? {
+      primaryLabel: 'Entry',
+      metricLabel: 'Metric Value',
+      metricMin: 0,
+      metricMax: 100000
+    };
   }
 
   private getToday(): string {
