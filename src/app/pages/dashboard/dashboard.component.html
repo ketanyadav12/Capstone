@@ -70,6 +70,7 @@
             <thead>
               <tr>
                 <th>{{ 'COMMON.VILLAGE' | t }}</th>
+                <th>State</th>
                 <th>{{ 'COMMON.EMPLOYMENT' | t }}</th>
                 <th>{{ 'COMMON.WATER' | t }}</th>
                 <th>{{ 'COMMON.LITERACY' | t }}</th>
@@ -79,6 +80,7 @@
             <tbody>
               <tr *ngFor="let village of villages">
                 <td>{{ village.name }}</td>
+                <td>{{ village.state || '-' }}</td>
                 <td>{{ village.employment }}</td>
                 <td>{{ village.water }}</td>
                 <td>{{ village.literacy }}</td>

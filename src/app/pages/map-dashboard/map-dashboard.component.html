@@ -43,6 +43,7 @@
               <button class="btn btn-link btn-sm p-0 text-start" (click)="focusVillage(village)">
                 <strong>{{ village.name }}</strong>
               </button>
+              <div class="small text-muted" *ngIf="village.state">{{ village.state }}</div>
               <div class="small text-muted">{{ village.lat }}, {{ village.lng }}</div>
             </div>
             <button class="btn btn-sm btn-outline-danger" (click)="deleteVillage(village.id)" *ngIf="canEdit">

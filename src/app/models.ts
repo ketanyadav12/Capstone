@@ -16,6 +16,7 @@ export interface ModuleRecord {
   id: string;
   villageId?: string;
   villageName?: string;
+  villageState?: string;
   area?: string;
   primaryValue?: string;
   metricValue?: number;

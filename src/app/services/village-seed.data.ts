@@ -1,0 +1,32 @@
+import type { VillageData } from './village-data.service';
+
+export const DEFAULT_VILLAGES: VillageData[] = [
+  { id: 'andhra_pradesh_lepakshi', name: 'Lepakshi', state: 'Andhra Pradesh', lat: 13.8, lng: 77.61, employment: 68, water: 72, literacy: 78 },
+  { id: 'arunachal_pradesh_hong', name: 'Hong', state: 'Arunachal Pradesh', lat: 27.62, lng: 93.83, employment: 61, water: 69, literacy: 66 },
+  { id: 'assam_sualkuchi', name: 'Sualkuchi', state: 'Assam', lat: 26.17, lng: 91.57, employment: 64, water: 71, literacy: 75 },
+  { id: 'bihar_barabar', name: 'Barabar', state: 'Bihar', lat: 25.02, lng: 85.08, employment: 59, water: 63, literacy: 69 },
+  { id: 'chhattisgarh_chitrakote', name: 'Chitrakote', state: 'Chhattisgarh', lat: 19.2, lng: 81.95, employment: 58, water: 67, literacy: 64 },
+  { id: 'goa_saligao', name: 'Saligao', state: 'Goa', lat: 15.55, lng: 73.78, employment: 76, water: 82, literacy: 89 },
+  { id: 'gujarat_madhapur', name: 'Madhapur', state: 'Gujarat', lat: 23.38, lng: 69.71, employment: 73, water: 74, literacy: 80 },
+  { id: 'haryana_rakhigarhi', name: 'Rakhigarhi', state: 'Haryana', lat: 29.3, lng: 76.03, employment: 69, water: 68, literacy: 77 },
+  { id: 'himachal_pradesh_kalpa', name: 'Kalpa', state: 'Himachal Pradesh', lat: 31.54, lng: 78.27, employment: 67, water: 79, literacy: 83 },
+  { id: 'jharkhand_netarhat', name: 'Netarhat', state: 'Jharkhand', lat: 23.47, lng: 84.27, employment: 57, water: 62, literacy: 65 },
+  { id: 'karnataka_anegundi', name: 'Anegundi', state: 'Karnataka', lat: 15.33, lng: 76.46, employment: 71, water: 70, literacy: 79 },
+  { id: 'kerala_kumarakom', name: 'Kumarakom', state: 'Kerala', lat: 9.6, lng: 76.43, employment: 78, water: 85, literacy: 96 },
+  { id: 'madhya_pradesh_mandu', name: 'Mandu', state: 'Madhya Pradesh', lat: 22.35, lng: 75.4, employment: 60, water: 66, literacy: 72 },
+  { id: 'maharashtra_hiware_bazar', name: 'Hiware Bazar', state: 'Maharashtra', lat: 19.05, lng: 74.78, employment: 82, water: 88, literacy: 91 },
+  { id: 'manipur_andro', name: 'Andro', state: 'Manipur', lat: 24.75, lng: 94.05, employment: 63, water: 70, literacy: 74 },
+  { id: 'meghalaya_mawlynnong', name: 'Mawlynnong', state: 'Meghalaya', lat: 25.2, lng: 91.9, employment: 72, water: 83, literacy: 88 },
+  { id: 'mizoram_reiek', name: 'Reiek', state: 'Mizoram', lat: 23.58, lng: 92.66, employment: 65, water: 77, literacy: 84 },
+  { id: 'nagaland_khonoma', name: 'Khonoma', state: 'Nagaland', lat: 25.66, lng: 94.09, employment: 66, water: 73, literacy: 81 },
+  { id: 'odisha_raghurajpur', name: 'Raghurajpur', state: 'Odisha', lat: 19.83, lng: 85.93, employment: 62, water: 68, literacy: 76 },
+  { id: 'punjab_hussainiwala', name: 'Hussainiwala', state: 'Punjab', lat: 30.8, lng: 74.6, employment: 74, water: 75, literacy: 80 },
+  { id: 'rajasthan_khimsar', name: 'Khimsar', state: 'Rajasthan', lat: 27.05, lng: 73.56, employment: 61, water: 58, literacy: 67 },
+  { id: 'sikkim_yuksom', name: 'Yuksom', state: 'Sikkim', lat: 27.37, lng: 88.23, employment: 70, water: 80, literacy: 86 },
+  { id: 'tamil_nadu_kanadukathan', name: 'Kanadukathan', state: 'Tamil Nadu', lat: 10.17, lng: 78.78, employment: 77, water: 78, literacy: 90 },
+  { id: 'telangana_pochampally', name: 'Pochampally', state: 'Telangana', lat: 17.35, lng: 78.77, employment: 75, water: 74, literacy: 82 },
+  { id: 'tripura_vanghmun', name: 'Vanghmun', state: 'Tripura', lat: 23.93, lng: 91.94, employment: 64, water: 71, literacy: 73 },
+  { id: 'uttar_pradesh_bateshwar', name: 'Bateshwar', state: 'Uttar Pradesh', lat: 26.84, lng: 78.74, employment: 58, water: 64, literacy: 68 },
+  { id: 'uttarakhand_mana', name: 'Mana', state: 'Uttarakhand', lat: 30.77, lng: 79.58, employment: 67, water: 76, literacy: 84 },
+  { id: 'west_bengal_bawali', name: 'Bawali', state: 'West Bengal', lat: 22.14, lng: 88.24, employment: 70, water: 69, literacy: 78 }
+];

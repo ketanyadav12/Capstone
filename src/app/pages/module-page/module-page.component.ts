@@ -117,6 +117,10 @@ export class ModulePageComponent implements OnInit, OnDestroy {
     return this.villages.find((village) => village.id === this.selectedVillageId)?.name ?? '';
   }
 
+  get selectedVillageState(): string {
+    return this.villages.find((village) => village.id === this.selectedVillageId)?.state ?? '';
+  }
+
   private get villageScopedData(): ModuleRecord[] {
     if (!this.selectedVillageId) {
       return [];
@@ -165,6 +169,7 @@ export class ModulePageComponent implements OnInit, OnDestroy {
     this.moduleDataService.addRecord(this.moduleTitle, {
       villageId: this.selectedVillageId,
       villageName: this.selectedVillageName,
+      villageState: this.selectedVillageState,
       area: isAreaBasedModule ? primaryValue : undefined,
       primaryValue,
       metricValue: this.clampMetric(this.newRecord.metricValue),

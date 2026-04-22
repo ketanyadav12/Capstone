@@ -10,7 +10,7 @@
         <select class="form-select" name="selectedVillageId" [(ngModel)]="selectedVillageId" (change)="onFilterChanged()">
           <option [ngValue]="''" *ngIf="villages.length === 0">No villages available</option>
           <option *ngFor="let village of villages" [ngValue]="village.id">
-            {{ village.name }}
+            {{ village.state ? village.name + ' — ' + village.state : village.name }}
           </option>
         </select>
       </div>
@@ -108,6 +108,7 @@
         <thead>
           <tr>
             <th>{{ 'COMMON.VILLAGE' | t }}</th>
+            <th>State</th>
             <th>{{ primaryFieldLabel }}</th>
             <th>{{ metricFieldLabel }}</th>
             <th>{{ 'MODULES.STATUS' | t }}</th>
@@ -119,6 +120,7 @@
         <tbody>
           <tr *ngFor="let row of paginatedData">
             <td>{{ row.villageName || '-' }}</td>
+            <td>{{ row.villageState || '-' }}</td>
             <td>{{ getPrimaryValue(row) || '-' }}</td>
             <td>{{ row.metricValue ?? '-' }}</td>
             <td>

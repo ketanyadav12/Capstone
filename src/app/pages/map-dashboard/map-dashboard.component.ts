@@ -86,6 +86,7 @@ export class MapDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         .addTo(this.markersLayer)
         .bindPopup(`
           <strong>${village.name}</strong><br/>
+          ${village.state ? `${village.state}<br/>` : ''}
           Employment Rate: ${village.employment}%<br/>
           Water Availability: ${village.water}%<br/>
           Literacy Rate: ${village.literacy}%
